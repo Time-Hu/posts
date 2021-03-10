@@ -1,0 +1,23 @@
+{
+    "grammarly.overrides": [
+        {
+            "files": [
+                "**/当数据库遇上流计算：流数据库的诞生_en(1).md"
+            ],
+            "config": {
+                "audience": "expert",
+                "dialect": "american",
+                "domain": "technical",
+                "emotions": [
+                    "confident"
+                ],
+                "goals": [
+                    "inform",
+                    "describe",
+                    "convince",
+                    "tellStory"
+                ]
+            }
+        }
+    ]
+}
