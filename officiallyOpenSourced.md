@@ -240,7 +240,7 @@ As an open-source software company, [EMQ](https://www.emqx.io/) always believes 
 
 HStreamDB is currently under development by our team, and this is an excellent opportunity and time for developers to get involved with the community.
 
- **We sincerely invite you to join us building the HStreamDB open source community** You can learn more about project from [HStreamDB 官网](https://hstream.io/), or [GitHub Repo](https://github.com/hstreamdb/hstream). It is also welcomed to join the discussion on our [Slack Channel](https://slack-invite.hstream.io/). We will also host periodic open days to share the project progress and exchange technical insights.
+ **We sincerely invite you to join us building the HStreamDB open source community** You can learn more about project from [HStreamDB official website](https://hstream.io/), or [GitHub Repo](https://github.com/hstreamdb/hstream). It is also welcomed to join the discussion on our [Slack Channel](https://slack-invite.hstream.io/). We will also host periodic open days to share the project progress and exchange technical insights.
 
 HStreamDB will support and improve the distributed processing, Schema management, SQL optimization, monitoring and operation, and maintenance in the upcoming releases.
 
