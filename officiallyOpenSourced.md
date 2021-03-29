@@ -6,13 +6,13 @@
 
 To better address the needs for real-time streaming data storage and processing in various businesses, we (EMQ) have been searching for an optimal system and architecture. 
 
-We presented a brand new concept in the previous post ["When Database Meets Stream Computing: The Birth of Stream Database!"](https://www.emqx.io/blog/birth-of-streaming-database) - "Stream Database" - a new database category. **In the article today, we will introduce HStreamDB, a Stream Database currently being developed by the Haskell Team from EMQ**. Comparing it with the existing unstructured streaming solutions, we believe that [Stream Database pioneered by HStreamDB](http://hstream.io/) will be the best choice in the era of real-time data processing. Also that it will become the core infrastructure of software systems in the future.
+We presented a brand new concept in the previous post ["When Database Meets Stream Computing: The Birth of Streaming Database!"](https://www.emqx.io/blog/birth-of-streaming-database) - "Streaming Database" - a new database category. **In the article today, we will introduce HStreamDB, a Streaming Database currently being developed by the Haskell Team from EMQ**. Comparing it with the existing unstructured streaming solutions, we believe that [Streaming Database pioneered by HStreamDB](http://hstream.io/) will be the best choice in the era of real-time data processing. Also that it will become the core infrastructure of software systems in the future.
 
 
 
-## HStream Stream Database Overview 
+## HStream Streaming Database Overview 
 
- **HStreamDB is a stream database designed for streaming data, with complete lifecycle management for accessing, storing, processing, and distributing large-scale real-time data streams**. It uses standard SQL (and its stream extensions) as the primary interface language, with real-time as the main feature, and aims to simplify the operation and management of data streams and the development of real-time applications.
+ **HStreamDB is a streaming database designed for streaming data, with complete lifecycle management for accessing, storing, processing, and distributing large-scale real-time data streams**. It uses standard SQL (and its stream extensions) as the primary interface language, with real-time as the main feature, and aims to simplify the operation and management of data streams and the development of real-time applications.
 
 The figure below shows the overall architecture of HStreamDB. A single HStreamDB node consists of two core components, HStream Server (HSQL) and HStream Storage (HStorage). And an HStream cluster consists of several peer-to-peer HStreamDB nodes. Clients can connect to any HStreamDB node in the cluster and perform stream processing and analysis through your familiar SQL language.
 
