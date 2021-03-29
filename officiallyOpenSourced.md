@@ -1,27 +1,28 @@
-# EMQ officially release HStreamDB under an open license
+# HStream - a streaming database on trend
+# - EMQ officially release HStreamDB under an open license
 
 
 
-## Intro 
+## Intro
 
-To better address the needs for real-time streaming data storage and processing in various businesses, we (EMQ) have been searching for an optimal system and architecture. 
+To better address the needs for real-time streaming data storage and processing in various businesses, we (EMQ) have been searching for an optimal system and architecture.
 
-We presented a brand new concept in the previous post ["When Database Meets Stream Computing: The Birth of Stream Database!"](https://www.emqx.io/blog/birth-of-streaming-database) - "Stream Database" - a new database category. **In the article today, we will introduce HStreamDB, a Stream Database currently being developed by the Haskell Team from EMQ**. Comparing it with the existing unstructured streaming solutions, we believe that [Stream Database pioneered by HStreamDB](http://hstream.io/) will be the best choice in the era of real-time data processing. Also that it will become the core infrastructure of software systems in the future.
+We have presented a brand new concept in the previous post ["When Database Meets Stream Computing: The Birth of Streaming Database!"](https://www.emqx.io/blog/birth-of-streaming-database) - "Streaming Database" - a new database category. **In the article today, we will introduce HStreamDB, a Streaming Database currently being developed by the Haskell Team from EMQ**. Comparing it with the existing unstructured streaming solutions, we believe that [Streaming Database pioneered by HStreamDB](http://hstream.io/) will be the best choice in the era of real-time data processing. Also that it will become the core infrastructure of software systems in the future.
 
 
 
-## HStream Stream Database Overview 
+## HStream Streaming Database Overview
 
- **HStreamDB is a stream database designed for streaming data, with complete lifecycle management for accessing, storing, processing, and distributing large-scale real-time data streams**. It uses standard SQL (and its stream extensions) as the primary interface language, with real-time as the main feature, and aims to simplify the operation and management of data streams and the development of real-time applications.
+ **HStreamDB is a streaming database designed for streaming data, with complete lifecycle management for accessing, storing, processing, and distributing large-scale real-time data streams**. It uses standard SQL (and its stream extensions) as the primary interface language, with real-time as the main feature, and aims to simplify the operation and management of data streams and the development of real-time applications.
 
 The figure below shows the overall architecture of HStreamDB. A single HStreamDB node consists of two core components, HStream Server (HSQL) and HStream Storage (HStorage). And an HStream cluster consists of several peer-to-peer HStreamDB nodes. Clients can connect to any HStreamDB node in the cluster and perform stream processing and analysis through your familiar SQL language.
 
 ![画板.png](https://static.emqx.net/images/ca810cdf1d13ffbc1fe15ce41daa1695.png)
 
-<center>HStreamDB Structure Overview</center> 
+<center>HStreamDB Structure Overview</center>
 
 
-HStream Server (HSQL), the core computation component of HStreamDB, is designed to be stateless. The primary responsibility of HSQL is to support client connection management, security authentication, SQL parsing and optimization, and operations for stream computation such as task creation, scheduling, execution, management, etc. 
+HStream Server (HSQL), the core computation component of HStreamDB, is designed to be stateless. The primary responsibility of HSQL is to support client connection management, security authentication, SQL parsing and optimization, and operations for stream computation such as task creation, scheduling, execution, management, etc.
 
 ###  HStream Server
 
@@ -31,15 +32,15 @@ HStream Server (HSQL), the core computation component of HStreamDB, is designed 
 
   It is in charge of protocol processing, connection management, security authentication, and access control for client requests.
 
-2. SQL layer 
+2. SQL layer
 
   To perform most stream processing and real-time analysis tasks, clients interact with HStreamDB through SQL statements. This layer is mainly responsible for compiling these SQL statements into logical data flow diagrams. Like the classic database system model, it contains two core sub-components: SQL parser and SQL optimizer. The SQL parser deals with the lexical and syntactic analysis and the compilation from SQL statements to relational algebraic expressions; the SQL optimizer will optimize the generated execution plan based on various rules and contexts.
 
-3. Stream Layer 
-  
+3. Stream Layer
+
   Stream layer includes the implementation of various stream processing operators, the data structures and DSL to express data flow diagrams, and the support for user-defined functions as processing operators. So, it is responsible for selecting the corresponding operator and optimization to generate the executable data flow diagram.
- 
-4. Runtime Layer 
+
+4. Runtime Layer
 
   It is the layer responsible for executing the computation task of data flow diagrams and returning the results. The main components of the layer include task scheduler, state manager, and execution optimizer. The schedule takes care of the tasks scheduling between available computation resources, such as multiple threads of a single process, multiple processors of a single machine, and multiple machines or containers of a distributed cluster.
 
@@ -47,20 +48,20 @@ HStream Storage (HStore), the core storage component of HStreamDB, is a low-late
 
 The core storage model of HStore is a logging model that fits with streaming data. Regard data stream as an infinitely growing log, the typical operations supported include appending and reading by batches. Also, since the data stream is immutable, it generally does not support update operations.
 
-###  HStream Storage (HStore) 
+###  HStream Storage (HStore)
 
  **HStream Storage (HStore) consists of following layers**
 
-1. Streaming Data API layer 
+1. Streaming Data API layer
 
    This layer provides the core data stream management and read/write operations, including stream creation/deletion and writing to/consuming data in the stream. In the design of HStore, data streams are not stored as actual streams. Therefore, the creation of a stream is a very light-weight operation. There is no limit to the number of streams to be created in HStore. Besides, it supports concurrent writes to numerous data streams and still maintains a stable low latency. For the characteristics of data streams, HStore provides append operation to support fast data writing. While reading from stream data, it gives a subscription-based operation and pushes any new data written to the stream to the data consumer in real time.
 
-2. Replicator Layer 
-    
+2. Replicator Layer
+
     This layer implements the strongly consistent replication based on an optimized Flexible Paxos consensus mechanism, ensuring the fault tolerance and high availability to data, and maximizes cluster availability through a non-deterministic data distribution policy. Moreover, it supports replication groups reconfiguration online to achieve seamless cluster data balancing and horizontal scaling.
- 
+
 3. Tier1 Local Storage Layer
-   
+
    The layer fulfilled local persistent storage needs of data based on the optimized RocksDB storage engine, which encapsulates the access interface of streaming data and can support low-latency writing and reading a large amount of data.
 
 4. Tier2 Offloader Layer
@@ -77,9 +78,9 @@ The core storage model of HStore is a logging model that fits with streaming dat
 
 <center>HStreamDB Functional architecture</center>
 
-### Streaming data processing via SQL 
+### Streaming data processing via SQL
 
-HStreamDB has designed a complete processing solution based on event time. It supports basic filtering and conversion operations, aggregations by key, calculations based on various time windows, joining between data streams, and processing disordered and late messages to ensure the accuracy of calculation results. Simultaneously, the stream processing solution of HStream is highly extensible, and users can extend the interface according to their own needs. 
+HStreamDB has designed a complete processing solution based on event time. It supports basic filtering and conversion operations, aggregations by key, calculations based on various time windows, joining between data streams, and processing disordered and late messages to ensure the accuracy of calculation results. Simultaneously, the stream processing solution of HStream is highly extensible, and users can extend the interface according to their own needs.
 
 ### Materialized View
 
