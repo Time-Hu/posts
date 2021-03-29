@@ -1,15 +1,18 @@
-EMQ officially release HStreamDB under an open license
+# EMQ officially release HStreamDB under an open license
+
+
 
 ## Intro 
 
 To better address the needs for real-time streaming data storage and processing in various businesses, we (EMQ) have been searching for an optimal system and architecture. 
 
-We presented a brand new concept in the previous post ["When Database Meets Stream Computing: The Birth of Stream Database!"](https://www.emqx.io/blog/birth-of-streaming-database) - "Stream Database" - a new database category. **In today's article, we will introduce HStreamDB, a Stream Database currently being developed by the Haskell Team from EMQ**. Comparing it with the existing unstructured streaming solutions, we believe that [Stream Database pioneered by HStreamDB](http://hstream.io/) will be the best choice in the era of real-time data processing. Also that it will become the core infrastructure of software systems in the future.
+We presented a brand new concept in the previous post ["When Database Meets Stream Computing: The Birth of Stream Database!"](https://www.emqx.io/blog/birth-of-streaming-database) - "Stream Database" - a new database category. **In the article today, we will introduce HStreamDB, a Stream Database currently being developed by the Haskell Team from EMQ**. Comparing it with the existing unstructured streaming solutions, we believe that [Stream Database pioneered by HStreamDB](http://hstream.io/) will be the best choice in the era of real-time data processing. Also that it will become the core infrastructure of software systems in the future.
+
+
 
 ## HStream Stream Database Overview 
 
  **HStreamDB is a stream database designed for streaming data, with complete lifecycle management for accessing, storing, processing, and distributing large-scale real-time data streams**. It uses standard SQL (and its stream extensions) as the primary interface language, with real-time as the main feature, and aims to simplify the operation and management of data streams and the development of real-time applications.
-
 
 The figure below shows the overall architecture of HStreamDB. A single HStreamDB node consists of two core components, HStream Server (HSQL) and HStream Storage (HStorage). And an HStream cluster consists of several peer-to-peer HStreamDB nodes. Clients can connect to any HStreamDB node in the cluster and perform stream processing and analysis through your familiar SQL language.
 
@@ -42,7 +45,11 @@ HStream Server (HSQL), the core computation component of HStreamDB, is designed 
 
 HStream Storage (HStore), the core storage component of HStreamDB, is a low-latency storage component explicitly designed for streaming data. It can store large-scale real-time data in a distributed and persistent manner and seamlessly interface with large-capacity secondary storage such as S3 through the Auto-Tiering mechanism to achieve unified storage of historical and real-time data.
 
-The core storage model of HStore is a logging model that fits well with streaming data. Regard data stream as an infinitely growing log, the typical operations supported include appending and reading by intervals. Also, since the data stream is immutable, it generally does not support update operations.
+The core storage model of HStore is a logging model that fits with streaming data. Regard data stream as an infinitely growing log, the typical operations supported include appending and reading by batches. Also, since the data stream is immutable, it generally does not support update operations.
+
+###  HStream Storage (HStore) 
+
+ **HStream Storage (HStore) consists of following layers**
 
 1. Streaming Data API layer 
 
@@ -56,7 +63,6 @@ The core storage model of HStore is a logging model that fits well with streamin
    
    The layer fulfilled local persistent storage needs of data based on the optimized RocksDB storage engine, which encapsulates the access interface of streaming data and can support low-latency writing and reading a large amount of data.
 
-   
 4. Tier2 Offloader Layer
 
     This layer provides a unified interface encapsulation for various long-term storage systems, such as HDFS, AWS S3, etc. It supports automatic offloading of historical data to these secondary storage systems and can also be accessed through a unified streaming data interface.
@@ -79,6 +85,14 @@ HStreamDB has designed a complete processing solution based on event time. It su
 
 HStreamDB will offer materialized view to support complex query and analysis operations on continuously updated data streams. The incremental computing engine updates the materialized view instantly according to the changes of data streams, and users can query the materialized view through SQL statements to get real-time data insights
 
+### Data Stream Management
+
+HStreamDB supports the creation and management of large data streams. The creation of a data stream is a very light-weight operation based on an optimized storage design. It is possible to maintain a stable read/write latency in the case of many concurrent reads and writes.
+
+### Persistent storage
+
+HStreamDB provides low latency and reliable data stream storage. It ensures that written data messages are not lost and can be consumed repeatedly. HStreamDB replicates written data messages to multiple storage nodes for high availability and fault tolerance and supports dumping cold data to lower-cost storage services, such as object storage, distributed file storage, etc. This means the storage capacity can be infinitely scalable and achieve permanent storage of data.
+
 ### Schema Management of Data Streams
 
 HStreamDB emphasizes flexible schema support. Data streams can be schema-less or schema-ed by JSON, Avro, Protobuf, etc. It will support schema evolution and automatically manages the compatibility between multiple versions of schemas.
@@ -96,10 +110,8 @@ The security will be ensured by TLS encrypted transport and OAuth and JWT based 
 We will set up a web-based console with system dashboards and visual charts, enabling detailed monitoring of cluster machine status, system key indicators, etc., which make it more convenient for O&M staff to manage the cluster.
 
 
+
 ## Applications of HStreamDB
-
-
-## HStreamDB Application Scenarios
 
 ### Real-time data analysis
 
@@ -116,6 +128,7 @@ It often requires a complete set of ETL systems for synchronizing and migrating 
 ### Online Machine Learning
 
 Nowadays, machine learning systems play an increasingly important role in business systems, including search, recommendation, risk control, and other events that rely extensively on machine learning systems. However, with the explosion of online business and related application use cases, conventional offline systems and machine learning platforms can no longer meet business development requirements. HStreamDB's real-time computing engine can help machine learning systems to meet online feature extraction and real-time recommendation in real time.
+
 
 
 ## HStreamDB Quickstart with Docker¶
@@ -244,4 +257,4 @@ HStreamDB is currently under development by our team, and this is an excellent o
 
 HStreamDB will support and improve the distributed processing, Schema management, SQL optimization, monitoring and operation, and maintenance in the upcoming releases.
 
-We believe that with the support from everyone who loves open source, we will create and witness the future of streaming database together, starting from HStreamDB!
+We believe that with the support from everyone who loves open source, we will create and witness the future of streaming databases together, starting from HStreamDB!
